@@ -4,99 +4,974 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Client Management Screen</title>
-    <link rel="stylesheet" href="index.css" />
+    <title>Client Maintenance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1a4f8a;
+            --primary-light: #2563ab;
+            --primary-dark: #0f3566;
+            --accent: #2563ab;
+            --sidebar-bg: #1c2b3a;
+            --sidebar-text: #b0bec5;
+            --sidebar-active: #2196f3;
+            --sidebar-hover: #263648;
+            --topbar-bg: #1a4f8a;
+            --border: #d1d9e0;
+            --bg: #f4f6f9;
+            --panel-bg: #ffffff;
+            --label-color: #1a4f8a;
+            --text: #2c3e50;
+            --text-secondary: #546e7a;
+            --input-border: #c5cdd6;
+            --input-focus: #2563ab;
+            --tab-active-bg: #ffffff;
+            --tab-inactive-bg: #eef2f7;
+            --header-gradient: linear-gradient(to right, #1a4f8a, #2563ab);
+            --bts-header: linear-gradient(to right, #2c5f8a, #1a4f8a);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --radius: 3px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 12.5px;
+            background: var(--bg);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            color: var(--text);
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            width: 200px;
+            background: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 14px 16px;
+            background: #141f2b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #2a3a4a;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--sidebar-active);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .logo-text {
+            color: #e0e8f0;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .logo-sub {
+            color: #78909c;
+            font-size: 10px;
+            margin-top: 1px;
+        }
+
+        .sidebar-user {
+            padding: 12px 16px;
+            border-top: 1px solid #2a3a4a;
+            margin-top: auto;
+        }
+
+        .user-name {
+            color: #e0e8f0;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .user-role {
+            color: #78909c;
+            font-size: 10px;
+            margin-top: 2px;
+        }
+
+        .sidebar-section-label {
+            padding: 12px 16px 8px;
+            color: #78909c;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: color 0.2s, background 0.2s;
+            user-select: none;
+        }
+
+        .sidebar-section-label:hover {
+            color: #e0e8f0;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-section-label::after {
+            content: '›';
+            font-size: 14px;
+            transition: transform 0.2s;
+            transform: rotate(90deg);
+        }
+
+        .sidebar-section-label.collapsed::after {
+            transform: rotate(0deg);
+        }
+
+        .sidebar-section-content {
+            display: block;
+        }
+
+        .sidebar-section-label.collapsed+.sidebar-section-content {
+            display: none;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 16px;
+            color: var(--sidebar-text);
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-item:hover {
+            background: var(--sidebar-hover);
+            color: #e0e8f0;
+        }
+
+        .sidebar-item.active {
+            background: rgba(33, 150, 243, 0.12);
+            color: #64b5f6;
+            border-left-color: var(--sidebar-active);
+            font-weight: 500;
+        }
+
+        .sidebar-item svg {
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+
+        .sidebar-item.active svg {
+            opacity: 1;
+        }
+
+        .sidebar-arrow {
+            margin-left: auto;
+            font-size: 10px;
+            opacity: 0.5;
+            transition: transform 0.2s;
+        }
+
+        .sidebar-item.open .sidebar-arrow {
+            transform: rotate(90deg);
+        }
+
+        .sidebar-submenu {
+            display: none;
+            background: rgba(0, 0, 0, 0.15);
+            padding-bottom: 5px;
+        }
+
+        .sidebar-item.open+.sidebar-submenu {
+            display: block;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            padding: 7px 16px 7px 40px;
+            color: var(--sidebar-text);
+            font-size: 11.5px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .submenu-item:hover {
+            background: var(--sidebar-hover);
+            color: #e0e8f0;
+        }
+
+        /* ─── MAIN AREA ─── */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        /* Top Bar */
+        .topbar {
+            background: var(--topbar-bg);
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 42px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .topbar-title {
+            color: white;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.01em;
+        }
+
+        .topbar-branch {
+            color: #90caf9;
+            font-size: 11px;
+            margin-left: 8px;
+            font-weight: 400;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar-time {
+            color: #90caf9;
+            font-size: 11px;
+        }
+
+        .topbar-user {
+            width: 28px;
+            height: 28px;
+            background: #2563ab;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+        }
+
+        /* Tab Nav Bar */
+        .tab-nav {
+            background: #e8edf3;
+            padding: 0 16px;
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            border-bottom: 2px solid #c8d4df;
+            flex-shrink: 0;
+            overflow-x: auto;
+        }
+
+        .tab-nav-item {
+            padding: 7px 14px;
+            font-size: 11.5px;
+            font-weight: 500;
+            color: #546e7a;
+            cursor: pointer;
+            background: #dde3ec;
+            border: 1px solid #c8d4df;
+            border-bottom: none;
+            border-radius: 3px 3px 0 0;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.15s;
+        }
+
+        .tab-nav-item:hover {
+            background: #ced7e3;
+        }
+
+        .tab-nav-item.active {
+            background: #f4f6f9;
+            color: var(--primary);
+            border-color: #c8d4df;
+            font-weight: 600;
+            position: relative;
+            top: 1px;
+        }
+
+        .tab-close {
+            font-size: 11px;
+            opacity: 0.5;
+            margin-left: 2px;
+        }
+
+        .tab-close:hover {
+            opacity: 1;
+        }
+
+        /* Page Content */
+        .page-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 16px;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .page-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .page-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .page-badge {
+            font-size: 10px;
+            background: #e3f0fc;
+            color: var(--accent);
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: 600;
+            border: 1px solid #b3d4f5;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 10px;
+        }
+
+        .form-card-body {
+            padding: 14px 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 24px;
+        }
+
+        /* Field Row */
+        .field-row {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .field-label {
+            color: var(--label-color);
+            font-weight: 600;
+            font-size: 11.5px;
+            min-width: 140px;
+            text-align: right;
+            padding-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .field-input {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .field-input input[type="text"],
+        .field-input select {
+            width: 100%;
+            height: 28px;
+            border: 1px solid var(--input-border);
+            background: #fafbfc;
+            font-size: 12px;
+            padding: 0 8px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.15s, background 0.15s;
+            outline: none;
+            border-radius: 2px;
+        }
+
+        .field-input input[type="text"]:focus,
+        .field-input select:focus {
+            border-color: var(--input-focus);
+            background: white;
+            box-shadow: 0 0 0 2px rgba(37, 99, 171, 0.12);
+        }
+
+        .field-input input[type="text"]:hover:not(:focus),
+        .field-input select:hover:not(:focus) {
+            border-color: #90a4b8;
+        }
+
+        .search-btn {
+            width: 28px;
+            height: 28px;
+            background: #eef2f7;
+            border: 1px solid var(--input-border);
+            border-left: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            flex-shrink: 0;
+            transition: background 0.15s;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .search-btn:hover {
+            background: #dce6f0;
+        }
+
+        .field-input input[type="text"]:has(+ .search-btn) {
+            border-radius: 2px 0 0 2px;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .panel-area {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 0;
+        }
+
+        .tab {
+            padding: 6px 14px;
+            font-size: 11.5px;
+            font-weight: 500;
+            color: #546e7a;
+            cursor: pointer;
+            background: var(--tab-inactive-bg);
+            border: 1px solid var(--border);
+            border-bottom: none;
+            margin-right: 2px;
+            border-radius: 3px 3px 0 0;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .tab:hover:not(.active) {
+            background: #dce6f0;
+            color: var(--primary);
+        }
+
+        .tab.active {
+            background: var(--tab-active-bg);
+            color: var(--primary);
+            font-weight: 600;
+            border-color: var(--border);
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Tab Panel */
+        .tab-panel {
+            border: 1px solid var(--border);
+            border-top: none;
+            background: white;
+            min-height: 180px;
+            position: relative;
+        }
+
+        .tab-panel-header {
+            background: var(--header-gradient);
+            color: white;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 5px 12px;
+            letter-spacing: 0.01em;
+        }
+
+        /* Special Offers */
+        .special-offers-content {
+            padding: 10px 16px;
+        }
+
+        .offer-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 8px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background 0.12s;
+        }
+
+        .offer-row:hover {
+            background: #f0f5fb;
+        }
+
+        .offer-label {
+            font-size: 12px;
+            color: var(--text);
+            min-width: 260px;
+        }
+
+        input[type="checkbox"].offer-checkbox {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Other tab contents */
+        .tab-content {
+            display: none;
+            padding: 14px 16px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Behind The Scene */
+        .behind-scene {
+            margin-top: 8px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .behind-scene-header {
+            background: var(--bts-header);
+            color: white;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 5px 12px;
+            letter-spacing: 0.01em;
+        }
+
+        .behind-scene-content {
+            background: white;
+            padding: 10px 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px 12px;
+        }
+
+        .bts-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .bts-label {
+            font-size: 11px;
+            color: var(--label-color);
+            font-weight: 600;
+            min-width: 88px;
+            text-align: right;
+            padding-right: 6px;
+        }
+
+        .bts-input {
+            border: 1px solid var(--input-border);
+            background: #fafbfc;
+            height: 24px;
+            width: 100%;
+            font-size: 11.5px;
+            padding: 0 6px;
+            font-family: 'Inter', sans-serif;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .bts-input:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 2px rgba(37, 99, 171, 0.1);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-top: 40px;
+            flex-shrink: 0;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            width: 68px;
+            height: 28px;
+            border: none;
+            border-radius: 3px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.02em;
+            transition: filter 0.15s, transform 0.1s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-btn:hover {
+            filter: brightness(0.92);
+            transform: translateY(-1px);
+        }
+
+        .action-btn:active {
+            transform: translateY(0);
+            filter: brightness(0.85);
+        }
+
+        .btn-view {
+            background: #1a4f8a;
+        }
+
+        .btn-add {
+            background: #1a4f8a;
+        }
+
+        .btn-edit {
+            background: #1a4f8a;
+        }
+
+        .btn-close {
+            background: #455a64;
+        }
+
+        .btn-save {
+            background: #1a4f8a;
+        }
+
+        .btn-cancel {
+            background: #607d8b;
+        }
+
+        /* Divider */
+        .btn-divider {
+            height: 1px;
+            background: #d0d8e4;
+            margin: 4px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 48px;
+            }
+
+            .sidebar-item span,
+            .logo-text,
+            .logo-sub,
+            .sidebar-section-label,
+            .sidebar-user {
+                display: none;
+            }
+
+            .sidebar-item {
+                justify-content: center;
+                padding: 10px 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="window">
-        <!-- Title Bar -->
-        <div class="title-bar">
-            <span>Client Maintenance</span>
-            <div class="title-bar-controls">
-                <span>_</span>
-                <span>□</span>
-                <span>✕</span>
+    <!-- ─── SIDEBAR ─── -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">B</div>
+            <div>
+                <div class="logo-text">BankCore</div>
+                <div class="logo-sub">Main Branch</div>
             </div>
         </div>
 
-        <!-- Content -->
-        <div class="content">
 
-            <!-- Top Header Fields -->
-            <div style="display:flex; gap:16px; margin-bottom:8px;">
+        <div class="sidebar-section-label" onclick="this.classList.toggle('collapsed')">Navigation</div>
+        <div class="sidebar-section-content">
+            <div class="sidebar-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                </svg>
+                <span>Home</span>
+            </div>
+        </div>
 
-                <!-- Left Column -->
-                <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
-                    <div class="field-row">
-                        <span class="field-label">Client ID</span>
-                        <div class="field-input">
-                            <input type="text" style="width:260px;" />
-                            <div class="search-icon">🔍</div>
-                        </div>
-                    </div>
-                    <div class="field-row">
-                        <span class="field-label">Application ID</span>
-                        <div class="field-input">
-                            <input type="text" style="width:260px;" />
-                            <div class="search-icon">🔍</div>
-                        </div>
-                    </div>
-                    <div class="field-row">
-                        <span class="field-label">Client Name</span>
-                        <div class="field-input">
-                            <input type="text" style="width:260px;" />
-                        </div>
-                    </div>
-                    <div class="field-row">
-                        <span class="field-label">Base ID</span>
-                        <div class="field-input">
-                            <input type="text" style="width:260px;" />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column -->
-                <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
-                    <div class="field-row">
-                        <span class="field-label">Client Type</span>
-                        <div class="field-input">
-                            <select>
-                                <option>Enterprises</option>
-                                <option>Individual</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field-row">
-                        <span class="field-label">Segment Type</span>
-                        <div class="field-input">
-                            <select>
-                                <option>Corporate</option>
-                                <option>Retail</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field-row">
-                        <span class="field-label">Sub-Segment Type</span>
-                        <div class="field-input">
-                            <select>
-                                <option>Public Limited Compa...</option>
-                                <option>Private Limited</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field-row">
-                        <span class="field-label">Client Classification</span>
-                        <div class="field-input">
-                            <input type="text" style="width:260px;" />
-                        </div>
-                    </div>
-                </div>
-
+        <div class="sidebar-section-label" onclick="this.classList.toggle('collapsed')">Clients</div>
+        <div class="sidebar-section-content">
+            <div class="sidebar-item active" onclick="this.classList.toggle('open')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <span>Client Maintenance</span>
+                <span class="sidebar-arrow">›</span>
+            </div>
+            <div class="sidebar-submenu">
+                <div class="submenu-item">New Client</div>
+                <div class="submenu-item">Edit Client</div>
+                <div class="submenu-item">Client History</div>
             </div>
 
-            <!-- Main layout: Tabs + Side Buttons -->
+            <div class="sidebar-item" onclick="this.classList.toggle('open')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <span>Client Search</span>
+                <span class="sidebar-arrow">›</span>
+            </div>
+            <div class="sidebar-submenu">
+                <div class="submenu-item">Quick Search</div>
+                <div class="submenu-item">Advanced Search</div>
+                <div class="submenu-item">Recent Clients</div>
+            </div>
+        </div>
+
+        <div class="sidebar-section-label" onclick="this.classList.toggle('collapsed')">Accounts</div>
+        <div class="sidebar-section-content">
+            <div class="sidebar-item" onclick="this.classList.toggle('open')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                    <line x1="2" y1="10" x2="22" y2="10" />
+                </svg>
+                <span>Accounts</span>
+                <span class="sidebar-arrow">›</span>
+            </div>
+            <div class="sidebar-submenu">
+                <div class="submenu-item">Savings Accounts</div>
+                <div class="submenu-item">Current Accounts</div>
+                <div class="submenu-item">Fixed Deposits</div>
+            </div>
+
+            <div class="sidebar-item" onclick="this.classList.toggle('open')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+                <span>Loans</span>
+                <span class="sidebar-arrow">›</span>
+            </div>
+            <div class="sidebar-submenu">
+                <div class="submenu-item">Personal Loans</div>
+                <div class="submenu-item">Mortgages</div>
+                <div class="submenu-item">Business Loans</div>
+            </div>
+
+            <div class="sidebar-item" onclick="this.classList.toggle('open')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+                <span>Transactions</span>
+                <span class="sidebar-arrow">›</span>
+            </div>
+            <div class="sidebar-submenu">
+                <div class="submenu-item">Cash Deposit</div>
+                <div class="submenu-item">Cash Withdrawal</div>
+                <div class="submenu-item">Fund Transfer</div>
+            </div>
+        </div>
+
+        <div class="sidebar-section-label" onclick="this.classList.toggle('collapsed')">System</div>
+        <div class="sidebar-section-content">
+            <div class="sidebar-item" onclick="this.classList.toggle('open')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                </svg>
+                <span>Reports</span>
+                <span class="sidebar-arrow">›</span>
+            </div>
+            <div class="sidebar-submenu">
+                <div class="submenu-item">Financial Reports</div>
+                <div class="submenu-item">Client Reports</div>
+                <div class="submenu-item">Audit Trail</div>
+            </div>
+
+            <div class="sidebar-item" onclick="this.classList.toggle('open')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+                </svg>
+                <span>Configurations</span>
+                <span class="sidebar-arrow">›</span>
+            </div>
+            <div class="sidebar-submenu">
+                <div class="submenu-item">General Settings</div>
+                <div class="submenu-item">User Management</div>
+                <div class="submenu-item">System Logs</div>
+            </div>
+        </div>
+
+        <div class="sidebar-user">
+            <div class="user-name">Bonface Njuguna</div>
+            <div class="user-role">Administrator</div>
+        </div>
+    </aside>
+
+    <!-- ─── MAIN ─── -->
+    <div class="main">
+
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div style="display:flex;align-items:center;gap:6px;">
+                <span class="topbar-branch">Main Branch</span>
+            </div>
+            <div class="topbar-right">
+                <span class="topbar-time" id="clock">Wed, 11-03-2026 &nbsp; 09:37</span>
+                <div class="topbar-user">B</div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <div class="tab-nav-item">Home <span class="tab-close">✕</span></div>
+            <div class="tab-nav-item">Loan Accounts <span class="tab-close">✕</span></div>
+            <div class="tab-nav-item active">Client Maintenance <span class="tab-close">✕</span></div>
+            <div class="tab-nav-item">Reports <span class="tab-close">✕</span></div>
+        </div>
+
+        <!-- Page -->
+        <div class="page-content">
+
+            <div class="page-header">
+                <div class="page-title">Client Maintenance</div>
+                <span class="page-badge">Main Branch</span>
+            </div>
+
+            <!-- Header Fields Card -->
+            <div class="form-card">
+                <div class="form-card-body">
+
+                    <!-- Left Column -->
+                    <div style="display:flex;flex-direction:column;gap:9px;">
+                        <div class="field-row">
+                            <span class="field-label">Client ID</span>
+                            <div class="field-input">
+                                <input type="text" style="border-radius:2px 0 0 2px;" />
+                                <div class="search-btn">🔍</div>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Application ID</span>
+                            <div class="field-input">
+                                <input type="text" style="border-radius:2px 0 0 2px;" />
+                                <div class="search-btn">🔍</div>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Client Name</span>
+                            <div class="field-input">
+                                <input type="text" />
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Base ID</span>
+                            <div class="field-input">
+                                <input type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div style="display:flex;flex-direction:column;gap:9px;">
+                        <div class="field-row">
+                            <span class="field-label">Client Type</span>
+                            <div class="field-input">
+                                <select>
+                                    <option>Enterprises</option>
+                                    <option>Individual</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Segment Type</span>
+                            <div class="field-input">
+                                <select>
+                                    <option>Corporate</option>
+                                    <option>Retail</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Sub-Segment Type</span>
+                            <div class="field-input">
+                                <select>
+                                    <option>Public Limited Company</option>
+                                    <option>Private Limited</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Client Classification</span>
+                            <div class="field-input">
+                                <input type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Main Layout -->
             <div class="main-layout">
 
                 <div class="panel-area">
@@ -113,17 +988,16 @@
                     <div class="tab-panel">
                         <div class="tab-panel-header" id="dynamic-tab-header">Special Offers</div>
 
-                        <!-- Corporate Tab Content -->
-                        <div id="corporate" class="tab-content" style="display: none; padding: 16px;">
-                            <div class="field-row" style="margin-bottom: 12px;">
-                                <span class="field-label">KRA PIN:</span>
-                                <div class="field-input"><input type="text" style="width:260px;" value="P051428935G" />
-                                </div>
+                        <!-- Corporate -->
+                        <div id="corporate" class="tab-content" style="display:none;">
+                            <div class="field-row" style="margin-bottom:10px;">
+                                <span class="field-label">KRA PIN</span>
+                                <div class="field-input"><input type="text" value="P051428935G" /></div>
                             </div>
-                            <div class="field-row" style="margin-bottom: 8px;">
-                                <span class="field-label">Branch/Region:</span>
+                            <div class="field-row">
+                                <span class="field-label">Branch / Region</span>
                                 <div class="field-input">
-                                    <select style="width:260px;">
+                                    <select>
                                         <option>Nairobi Region</option>
                                         <option>Coast Region</option>
                                         <option>Rift Valley</option>
@@ -132,74 +1006,70 @@
                             </div>
                         </div>
 
-                        <!-- Address Tab Content -->
-                        <div id="address" class="tab-content" style="display: none; padding: 16px;">
-                            <div class="field-row" style="margin-bottom: 12px;">
-                                <span class="field-label">Street / Building:</span>
-                                <div class="field-input"><input type="text" style="width:260px;"
-                                        value="Upper Hill, Britam Tower" /></div>
+                        <!-- Address -->
+                        <div id="address" class="tab-content" style="display:none;">
+                            <div class="field-row" style="margin-bottom:10px;">
+                                <span class="field-label">Street / Building</span>
+                                <div class="field-input"><input type="text" value="Upper Hill, Britam Tower" /></div>
                             </div>
-                            <div class="field-row" style="margin-bottom: 12px;">
-                                <span class="field-label">City:</span>
-                                <div class="field-input"><input type="text" style="width:260px;" value="Nairobi" />
-                                </div>
+                            <div class="field-row">
+                                <span class="field-label">City</span>
+                                <div class="field-input"><input type="text" value="Nairobi" /></div>
                             </div>
                         </div>
 
-                        <!-- Special Offers Tab Content -->
-                        <div id="special-offers" class="tab-content special-offers-content">
-                            <label class="offer-row" style="cursor: pointer;">
+                        <!-- Special Offers -->
+                        <div id="special-offers" class="tab-content active special-offers-content">
+                            <label class="offer-row">
                                 <span class="offer-label">Can Send Greetings</span>
                                 <input type="checkbox" class="offer-checkbox" checked />
                             </label>
-                            <label class="offer-row" style="cursor: pointer;">
+                            <label class="offer-row">
                                 <span class="offer-label">Can Send Associate Special Offer</span>
                                 <input type="checkbox" class="offer-checkbox" />
                             </label>
-                            <label class="offer-row" style="cursor: pointer;">
+                            <label class="offer-row">
                                 <span class="offer-label">Can Send Our Special Offers</span>
                                 <input type="checkbox" class="offer-checkbox" checked />
                             </label>
-                            <label class="offer-row" style="cursor: pointer;">
+                            <label class="offer-row">
                                 <span class="offer-label">Statement Online</span>
                                 <input type="checkbox" class="offer-checkbox" />
                             </label>
-                            <label class="offer-row" style="cursor: pointer;">
+                            <label class="offer-row">
                                 <span class="offer-label">Mobile Alert</span>
                                 <input type="checkbox" class="offer-checkbox" checked />
                             </label>
                         </div>
 
-                        <!-- Directors Tab Content -->
-                        <div id="directors" class="tab-content" style="display: none; padding: 16px;">
-                            <div class="field-row" style="margin-bottom: 12px;">
-                                <span class="field-label">Primary Director:</span>
-                                <div class="field-input"><input type="text" style="width:260px;" value="Njeri Kamau" />
-                                </div>
+                        <!-- Directors -->
+                        <div id="directors" class="tab-content" style="display:none;">
+                            <div class="field-row" style="margin-bottom:10px;">
+                                <span class="field-label">Primary Director</span>
+                                <div class="field-input"><input type="text" value="Njeri Kamau" /></div>
                             </div>
-                            <div class="field-row" style="margin-bottom: 12px;">
-                                <span class="field-label">National ID:</span>
-                                <div class="field-input"><input type="text" style="width:260px;" value="29548234" />
-                                </div>
+                            <div class="field-row">
+                                <span class="field-label">National ID</span>
+                                <div class="field-input"><input type="text" value="29548234" /></div>
                             </div>
                         </div>
 
-                        <!-- Details Tab Content -->
-                        <div id="details" class="tab-content" style="display: none; padding: 16px;">
-                            <div class="field-row" style="margin-bottom: 12px;">
-                                <span class="field-label">Account Currency:</span>
+                        <!-- Details -->
+                        <div id="details" class="tab-content" style="display:none;">
+                            <div class="field-row" style="margin-bottom:10px;">
+                                <span class="field-label">Account Currency</span>
                                 <div class="field-input">
-                                    <select style="width:260px;">
+                                    <select>
                                         <option>KES - Kenya Shilling</option>
                                         <option>USD - US Dollar</option>
                                         <option>EUR - Euro</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="field-row" style="margin-bottom: 12px;">
-                                <span class="field-label">Risk Rating:</span>
+                            <div class="field-row">
+                                <span class="field-label">Risk Rating</span>
                                 <div class="field-input">
-                                    <select style="width:260px;">
+                                    <select>
                                         <option>Low</option>
                                         <option>Medium</option>
                                         <option>High</option>
@@ -213,61 +1083,38 @@
                     <div class="behind-scene">
                         <div class="behind-scene-header">Behind The Scene</div>
                         <div class="behind-scene-content">
-                            <div class="bts-row">
-                                <span class="bts-label">Status</span>
-                                <input class="bts-input" type="text" />
-                            </div>
-                            <div class="bts-row">
-                                <span class="bts-label">Open Date</span>
-                                <input class="bts-input" type="text" />
-                            </div>
-                            <div class="bts-row">
-                                <span class="bts-label">Closed Date</span>
-                                <input class="bts-input" type="text" />
-                            </div>
-                            <div class="bts-row">
-                                <span class="bts-label">Created By</span>
-                                <input class="bts-input" type="text" />
-                            </div>
-                            <div class="bts-row">
-                                <span class="bts-label">Modified By</span>
-                                <input class="bts-input" type="text" />
-                            </div>
-                            <div class="bts-row">
-                                <span class="bts-label">Supervised By</span>
-                                <input class="bts-input" type="text" />
-                            </div>
-                            <div class="bts-row">
-                                <span class="bts-label">Created On</span>
-                                <input class="bts-input" type="text" />
-                            </div>
-                            <div class="bts-row">
-                                <span class="bts-label">Modified On</span>
-                                <input class="bts-input" type="text" />
-                            </div>
-                            <div class="bts-row">
-                                <span class="bts-label">Supervised On</span>
-                                <input class="bts-input" type="text" />
-                            </div>
+                            <div class="bts-row"><span class="bts-label">Status</span><input class="bts-input"
+                                    type="text" /></div>
+                            <div class="bts-row"><span class="bts-label">Open Date</span><input class="bts-input"
+                                    type="text" /></div>
+                            <div class="bts-row"><span class="bts-label">Closed Date</span><input class="bts-input"
+                                    type="text" /></div>
+                            <div class="bts-row"><span class="bts-label">Created By</span><input class="bts-input"
+                                    type="text" /></div>
+                            <div class="bts-row"><span class="bts-label">Modified By</span><input class="bts-input"
+                                    type="text" /></div>
+                            <div class="bts-row"><span class="bts-label">Supervised By</span><input class="bts-input"
+                                    type="text" /></div>
+                            <div class="bts-row"><span class="bts-label">Created On</span><input class="bts-input"
+                                    type="text" /></div>
+                            <div class="bts-row"><span class="bts-label">Modified On</span><input class="bts-input"
+                                    type="text" /></div>
+                            <div class="bts-row"><span class="bts-label">Supervised On</span><input class="bts-input"
+                                    type="text" /></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Side Buttons -->
-                <div style="display:flex; flex-direction:column; justify-content:space-between; width:72px;">
-
-                    <!-- Top nav arrows removed as requested -->
-
-                    <!-- Action Buttons -->
-                    <div style="display:flex; flex-direction:column; gap:3px; margin-top:8px;">
-                        <button class="action-btn btn-info">View</button>
-                        <button class="action-btn btn-success">Add</button>
-                        <button class="action-btn btn-warning">Edit</button>
-                        <button class="action-btn btn-neutral">Close</button>
-                        <button class="action-btn btn-success">Save</button>
-                        <button class="action-btn btn-danger">Cancel</button>
-                    </div>
-
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="action-btn btn-view">View</button>
+                    <button class="action-btn btn-add">Add</button>
+                    <button class="action-btn btn-edit">Edit</button>
+                    <div class="btn-divider"></div>
+                    <button class="action-btn btn-save">Save</button>
+                    <button class="action-btn btn-cancel">Cancel</button>
+                    <div class="btn-divider"></div>
+                    <button class="action-btn btn-close">Close</button>
                 </div>
 
             </div>
@@ -275,8 +1122,23 @@
         </div>
     </div>
 
-    <!-- Application Logic -->
     <script>
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const d = days[now.getDay()];
+            const dd = String(now.getDate()).padStart(2, '0');
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const yyyy = now.getFullYear();
+            const hh = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${d}, ${dd}-${mm}-${yyyy}   ${hh}:${min}`;
+        }
+        updateClock();
+        setInterval(updateClock, 30000);
+
+        // Tabs
         document.addEventListener('DOMContentLoaded', () => {
             const tabs = document.querySelectorAll('.tab');
             const contents = document.querySelectorAll('.tab-content');
@@ -284,21 +1146,15 @@
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Update active tab styling
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
-
-                    // Update header text to match the selected tab
                     header.textContent = tab.textContent;
 
-                    // Show corresponding content and hide others
                     const targetId = tab.getAttribute('data-target');
-                    contents.forEach(content => {
-                        if (content.id === targetId) {
-                            content.style.display = 'block';
-                        } else {
-                            content.style.display = 'none';
-                        }
+                    contents.forEach(c => {
+                        c.style.display = c.id === targetId ? 'block' : 'none';
+                        c.classList.remove('active');
+                        if (c.id === targetId) c.classList.add('active');
                     });
                 });
             });
