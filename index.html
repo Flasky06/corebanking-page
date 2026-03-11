@@ -112,14 +112,14 @@
 
         .user-role {
             color: #78909c;
-            font-size: 10px;
+            font-size: 11.5px;
             margin-top: 2px;
         }
 
         .sidebar-section-label {
             padding: 12px 16px 8px;
             color: #78909c;
-            font-size: 10px;
+            font-size: 11.5px;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -248,13 +248,13 @@
         .topbar-title {
             color: white;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 15px;
             letter-spacing: 0.01em;
         }
 
         .topbar-branch {
             color: #90caf9;
-            font-size: 11px;
+            font-size: 13px;
             margin-left: 8px;
             font-weight: 400;
         }
@@ -284,57 +284,6 @@
             border: 2px solid rgba(255, 255, 255, 0.25);
         }
 
-        /* Tab Nav Bar */
-        .tab-nav {
-            background: #e8edf3;
-            padding: 0 16px;
-            display: flex;
-            align-items: flex-end;
-            gap: 2px;
-            border-bottom: 2px solid #c8d4df;
-            flex-shrink: 0;
-            overflow-x: auto;
-        }
-
-        .tab-nav-item {
-            padding: 7px 14px;
-            font-size: 11.5px;
-            font-weight: 500;
-            color: #546e7a;
-            cursor: pointer;
-            background: #dde3ec;
-            border: 1px solid #c8d4df;
-            border-bottom: none;
-            border-radius: 3px 3px 0 0;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: background 0.15s;
-        }
-
-        .tab-nav-item:hover {
-            background: #ced7e3;
-        }
-
-        .tab-nav-item.active {
-            background: #f4f6f9;
-            color: var(--primary);
-            border-color: #c8d4df;
-            font-weight: 600;
-            position: relative;
-            top: 1px;
-        }
-
-        .tab-close {
-            font-size: 11px;
-            opacity: 0.5;
-            margin-left: 2px;
-        }
-
-        .tab-close:hover {
-            opacity: 1;
-        }
 
         /* Page Content */
         .page-content {
@@ -354,7 +303,7 @@
         }
 
         .page-title {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--primary-dark);
             display: flex;
@@ -407,7 +356,7 @@
         .field-label {
             color: var(--label-color);
             font-weight: 600;
-            font-size: 11.5px;
+            font-size: 13.5px;
             min-width: 140px;
             text-align: right;
             padding-right: 10px;
@@ -427,7 +376,7 @@
             height: 28px;
             border: 1px solid var(--input-border);
             background: #fafbfc;
-            font-size: 12px;
+            font-size: 14px;
             padding: 0 8px;
             color: var(--text);
             font-family: 'Inter', sans-serif;
@@ -493,7 +442,7 @@
 
         .tab {
             padding: 6px 14px;
-            font-size: 11.5px;
+            font-size: 13.5px;
             font-weight: 500;
             color: #546e7a;
             cursor: pointer;
@@ -614,7 +563,7 @@
         }
 
         .bts-label {
-            font-size: 11px;
+            font-size: 13.5px;
             color: var(--label-color);
             font-weight: 600;
             min-width: 88px;
@@ -627,7 +576,7 @@
             background: #fafbfc;
             height: 24px;
             width: 100%;
-            font-size: 11.5px;
+            font-size: 13px;
             padding: 0 6px;
             font-family: 'Inter', sans-serif;
             border-radius: 2px;
@@ -654,7 +603,7 @@
             height: 28px;
             border: none;
             border-radius: 3px;
-            font-size: 11.5px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             color: white;
@@ -770,96 +719,8 @@
                 <div class="submenu-item">Edit Client</div>
                 <div class="submenu-item">Client History</div>
             </div>
-
-            <div class="sidebar-item" onclick="this.classList.toggle('open')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-                <span>Client Search</span>
-                <span class="sidebar-arrow">›</span>
-            </div>
-            <div class="sidebar-submenu">
-                <div class="submenu-item">Quick Search</div>
-                <div class="submenu-item">Advanced Search</div>
-                <div class="submenu-item">Recent Clients</div>
-            </div>
         </div>
 
-        <div class="sidebar-section-label" onclick="this.classList.toggle('collapsed')">Accounts</div>
-        <div class="sidebar-section-content">
-            <div class="sidebar-item" onclick="this.classList.toggle('open')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="2" y="5" width="20" height="14" rx="2" />
-                    <line x1="2" y1="10" x2="22" y2="10" />
-                </svg>
-                <span>Accounts</span>
-                <span class="sidebar-arrow">›</span>
-            </div>
-            <div class="sidebar-submenu">
-                <div class="submenu-item">Savings Accounts</div>
-                <div class="submenu-item">Current Accounts</div>
-                <div class="submenu-item">Fixed Deposits</div>
-            </div>
-
-            <div class="sidebar-item" onclick="this.classList.toggle('open')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="12" y1="1" x2="12" y2="23" />
-                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                </svg>
-                <span>Loans</span>
-                <span class="sidebar-arrow">›</span>
-            </div>
-            <div class="sidebar-submenu">
-                <div class="submenu-item">Personal Loans</div>
-                <div class="submenu-item">Mortgages</div>
-                <div class="submenu-item">Business Loans</div>
-            </div>
-
-            <div class="sidebar-item" onclick="this.classList.toggle('open')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                </svg>
-                <span>Transactions</span>
-                <span class="sidebar-arrow">›</span>
-            </div>
-            <div class="sidebar-submenu">
-                <div class="submenu-item">Cash Deposit</div>
-                <div class="submenu-item">Cash Withdrawal</div>
-                <div class="submenu-item">Fund Transfer</div>
-            </div>
-        </div>
-
-        <div class="sidebar-section-label" onclick="this.classList.toggle('collapsed')">System</div>
-        <div class="sidebar-section-content">
-            <div class="sidebar-item" onclick="this.classList.toggle('open')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                </svg>
-                <span>Reports</span>
-                <span class="sidebar-arrow">›</span>
-            </div>
-            <div class="sidebar-submenu">
-                <div class="submenu-item">Financial Reports</div>
-                <div class="submenu-item">Client Reports</div>
-                <div class="submenu-item">Audit Trail</div>
-            </div>
-
-            <div class="sidebar-item" onclick="this.classList.toggle('open')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="3" />
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
-                </svg>
-                <span>Configurations</span>
-                <span class="sidebar-arrow">›</span>
-            </div>
-            <div class="sidebar-submenu">
-                <div class="submenu-item">General Settings</div>
-                <div class="submenu-item">User Management</div>
-                <div class="submenu-item">System Logs</div>
-            </div>
-        </div>
 
         <div class="sidebar-user">
             <div class="user-name">Bonface Njuguna</div>
@@ -873,7 +734,8 @@
         <!-- Top Bar -->
         <div class="topbar">
             <div style="display:flex;align-items:center;gap:6px;">
-                <span class="topbar-branch">Main Branch</span>
+                <span class="topbar-title" style="color: white; font-weight: 600; font-size: 15px;">Client
+                    Maintenance</span>
             </div>
             <div class="topbar-right">
                 <span class="topbar-time" id="clock">Wed, 11-03-2026 &nbsp; 09:37</span>
@@ -881,13 +743,6 @@
             </div>
         </div>
 
-        <!-- Tab Navigation -->
-        <div class="tab-nav">
-            <div class="tab-nav-item">Home <span class="tab-close">✕</span></div>
-            <div class="tab-nav-item">Loan Accounts <span class="tab-close">✕</span></div>
-            <div class="tab-nav-item active">Client Maintenance <span class="tab-close">✕</span></div>
-            <div class="tab-nav-item">Reports <span class="tab-close">✕</span></div>
-        </div>
 
         <!-- Page -->
         <div class="page-content">
