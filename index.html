@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Management Screen</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+
+    <div class="window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <span>Client Maintenance</span>
+            <div class="title-bar-controls">
+                <span>_</span>
+                <span>□</span>
+                <span>✕</span>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+
+            <!-- Top Header Fields -->
+            <div style="display:flex; gap:16px; margin-bottom:8px;">
+
+                <!-- Left Column -->
+                <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
+                    <div class="field-row">
+                        <span class="field-label">Client ID</span>
+                        <div class="field-input">
+                            <input type="text" style="width:260px;" />
+                            <div class="search-icon">🔍</div>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <span class="field-label">Application ID</span>
+                        <div class="field-input">
+                            <input type="text" style="width:260px;" />
+                            <div class="search-icon">🔍</div>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <span class="field-label">Client Name</span>
+                        <div class="field-input">
+                            <input type="text" style="width:260px;" />
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <span class="field-label">Base ID</span>
+                        <div class="field-input">
+                            <input type="text" style="width:260px;" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
+                    <div class="field-row">
+                        <span class="field-label">Client Type</span>
+                        <div class="field-input">
+                            <select>
+                                <option>Enterprises</option>
+                                <option>Individual</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <span class="field-label">Segment Type</span>
+                        <div class="field-input">
+                            <select>
+                                <option>Corporate</option>
+                                <option>Retail</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <span class="field-label">Sub-Segment Type</span>
+                        <div class="field-input">
+                            <select>
+                                <option>Public Limited Compa...</option>
+                                <option>Private Limited</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <span class="field-label">Client Classification</span>
+                        <div class="field-input">
+                            <input type="text" style="width:260px;" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Main layout: Tabs + Side Buttons -->
+            <div class="main-layout">
+
+                <div class="panel-area">
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <div class="tab" data-target="corporate">Corporate</div>
+                        <div class="tab" data-target="address">Address</div>
+                        <div class="tab active" data-target="special-offers">Special Offers</div>
+                        <div class="tab" data-target="directors">Directors</div>
+                        <div class="tab" data-target="details">Details</div>
+                    </div>
+
+                    <!-- Tab Panel -->
+                    <div class="tab-panel">
+                        <div class="tab-panel-header" id="dynamic-tab-header">Special Offers</div>
+
+                        <!-- Corporate Tab Content -->
+                        <div id="corporate" class="tab-content" style="display: none; padding: 16px;">
+                            <div class="field-row" style="margin-bottom: 12px;">
+                                <span class="field-label">KRA PIN:</span>
+                                <div class="field-input"><input type="text" style="width:260px;" value="P051428935G" />
+                                </div>
+                            </div>
+                            <div class="field-row" style="margin-bottom: 8px;">
+                                <span class="field-label">Branch/Region:</span>
+                                <div class="field-input">
+                                    <select style="width:260px;">
+                                        <option>Nairobi Region</option>
+                                        <option>Coast Region</option>
+                                        <option>Rift Valley</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address Tab Content -->
+                        <div id="address" class="tab-content" style="display: none; padding: 16px;">
+                            <div class="field-row" style="margin-bottom: 12px;">
+                                <span class="field-label">Street / Building:</span>
+                                <div class="field-input"><input type="text" style="width:260px;"
+                                        value="Upper Hill, Britam Tower" /></div>
+                            </div>
+                            <div class="field-row" style="margin-bottom: 12px;">
+                                <span class="field-label">City:</span>
+                                <div class="field-input"><input type="text" style="width:260px;" value="Nairobi" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Special Offers Tab Content -->
+                        <div id="special-offers" class="tab-content special-offers-content">
+                            <label class="offer-row" style="cursor: pointer;">
+                                <span class="offer-label">Can Send Greetings</span>
+                                <input type="checkbox" class="offer-checkbox" checked />
+                            </label>
+                            <label class="offer-row" style="cursor: pointer;">
+                                <span class="offer-label">Can Send Associate Special Offer</span>
+                                <input type="checkbox" class="offer-checkbox" />
+                            </label>
+                            <label class="offer-row" style="cursor: pointer;">
+                                <span class="offer-label">Can Send Our Special Offers</span>
+                                <input type="checkbox" class="offer-checkbox" checked />
+                            </label>
+                            <label class="offer-row" style="cursor: pointer;">
+                                <span class="offer-label">Statement Online</span>
+                                <input type="checkbox" class="offer-checkbox" />
+                            </label>
+                            <label class="offer-row" style="cursor: pointer;">
+                                <span class="offer-label">Mobile Alert</span>
+                                <input type="checkbox" class="offer-checkbox" checked />
+                            </label>
+                        </div>
+
+                        <!-- Directors Tab Content -->
+                        <div id="directors" class="tab-content" style="display: none; padding: 16px;">
+                            <div class="field-row" style="margin-bottom: 12px;">
+                                <span class="field-label">Primary Director:</span>
+                                <div class="field-input"><input type="text" style="width:260px;" value="Njeri Kamau" />
+                                </div>
+                            </div>
+                            <div class="field-row" style="margin-bottom: 12px;">
+                                <span class="field-label">National ID:</span>
+                                <div class="field-input"><input type="text" style="width:260px;" value="29548234" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Details Tab Content -->
+                        <div id="details" class="tab-content" style="display: none; padding: 16px;">
+                            <div class="field-row" style="margin-bottom: 12px;">
+                                <span class="field-label">Account Currency:</span>
+                                <div class="field-input">
+                                    <select style="width:260px;">
+                                        <option>KES - Kenya Shilling</option>
+                                        <option>USD - US Dollar</option>
+                                        <option>EUR - Euro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field-row" style="margin-bottom: 12px;">
+                                <span class="field-label">Risk Rating:</span>
+                                <div class="field-input">
+                                    <select style="width:260px;">
+                                        <option>Low</option>
+                                        <option>Medium</option>
+                                        <option>High</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Behind The Scene -->
+                    <div class="behind-scene">
+                        <div class="behind-scene-header">Behind The Scene</div>
+                        <div class="behind-scene-content">
+                            <div class="bts-row">
+                                <span class="bts-label">Status</span>
+                                <input class="bts-input" type="text" />
+                            </div>
+                            <div class="bts-row">
+                                <span class="bts-label">Open Date</span>
+                                <input class="bts-input" type="text" />
+                            </div>
+                            <div class="bts-row">
+                                <span class="bts-label">Closed Date</span>
+                                <input class="bts-input" type="text" />
+                            </div>
+                            <div class="bts-row">
+                                <span class="bts-label">Created By</span>
+                                <input class="bts-input" type="text" />
+                            </div>
+                            <div class="bts-row">
+                                <span class="bts-label">Modified By</span>
+                                <input class="bts-input" type="text" />
+                            </div>
+                            <div class="bts-row">
+                                <span class="bts-label">Supervised By</span>
+                                <input class="bts-input" type="text" />
+                            </div>
+                            <div class="bts-row">
+                                <span class="bts-label">Created On</span>
+                                <input class="bts-input" type="text" />
+                            </div>
+                            <div class="bts-row">
+                                <span class="bts-label">Modified On</span>
+                                <input class="bts-input" type="text" />
+                            </div>
+                            <div class="bts-row">
+                                <span class="bts-label">Supervised On</span>
+                                <input class="bts-input" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side Buttons -->
+                <div style="display:flex; flex-direction:column; justify-content:space-between; width:72px;">
+
+                    <!-- Top nav arrows removed as requested -->
+
+                    <!-- Action Buttons -->
+                    <div style="display:flex; flex-direction:column; gap:3px; margin-top:8px;">
+                        <button class="action-btn btn-info">View</button>
+                        <button class="action-btn btn-success">Add</button>
+                        <button class="action-btn btn-warning">Edit</button>
+                        <button class="action-btn btn-neutral">Close</button>
+                        <button class="action-btn btn-success">Save</button>
+                        <button class="action-btn btn-danger">Cancel</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            const header = document.getElementById('dynamic-tab-header');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Update active tab styling
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    // Update header text to match the selected tab
+                    header.textContent = tab.textContent;
+
+                    // Show corresponding content and hide others
+                    const targetId = tab.getAttribute('data-target');
+                    contents.forEach(content => {
+                        if (content.id === targetId) {
+                            content.style.display = 'block';
+                        } else {
+                            content.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

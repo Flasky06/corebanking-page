@@ -1,0 +1,353 @@
+ * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            background: #d0d0d0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .window {
+            background: #f0f0f0;
+            border: 1px solid #999;
+            width: 90%; /* Responsive width */
+            max-width: 1400px; /* Prevent it from getting absurdly large on ultra-wide monitors */
+            max-height: 96vh; /* Allow it to fit inside smaller Nest Hub heights */
+            overflow-y: auto; /* Enable internal scrolling on small screens */
+        }
+
+        /* Title bar */
+        .title-bar {
+            background: linear-gradient(to bottom, #c0d8f0, #a0b8d8);
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #003366;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #88aacc;
+        }
+
+        .title-bar-controls span {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px solid #888;
+            margin-left: 2px;
+            text-align: center;
+            line-height: 12px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        /* Main content area */
+        .content {
+            padding: 10px 12px;
+            background: #f0f0f0;
+        }
+
+        /* Top fields section */
+        .top-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 20px;
+            margin-bottom: 8px;
+        }
+
+        .left-fields,
+        .right-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Increased from 4px to add space between inputs */
+        }
+
+        .field-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .field-label {
+            color: #003399;
+            font-weight: bold;
+            font-size: 13px; /* Increased from 11px */
+            min-width: 120px; /* Increased to accommodate larger text */
+            text-align: right;
+        }
+
+        .field-input {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex: 1;
+        }
+
+        .field-input input[type="text"] {
+            border: 1px solid #aaa;
+            background: white;
+            height: 30px; /* Increased height */
+            font-size: 14px; /* Increased font size */
+            padding: 0 8px; /* Better padding */
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .field-input input[type="text"]:focus {
+            outline: none;
+            border-color: #4a90d9;
+        }
+
+        .field-input input[type="text"]:hover:not(:focus) {
+            border-color: #777;
+        }
+
+        .field-input select {
+            border: 1px solid #aaa;
+            background: white;
+            height: 30px; /* Increased height */
+            font-size: 14px;
+            padding: 0 6px;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .field-input select:focus {
+            outline: none;
+            border-color: #4a90d9;
+        }
+
+        .field-input select:hover:not(:focus) {
+            border-color: #777;
+        }
+
+        .search-icon {
+            width: 30px; /* Match input height */
+            height: 30px; /* Match input height */
+            background: #e8e8e8;
+            border: 1px solid #aaa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 0;
+            border-bottom: 1px solid #aaa;
+        }
+
+        .tab {
+            padding: 4px 12px;
+            font-size: 13px; /* Increased font size */
+            color: #003399;
+            cursor: pointer;
+            background: #e0e8f0;
+            border: 1px solid #aaa;
+            border-bottom: none;
+            margin-right: 2px;
+            transition: background-color 0.2s;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: #c0c8db;
+        }
+
+        .tab.active {
+            background: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+            font-weight: bold;
+            color: #003399;
+        }
+
+        /* Tab content panel */
+        .tab-panel {
+            border: 1px solid #aaa;
+            border-top: none;
+            background: white;
+            min-height: 200px;
+            position: relative;
+        }
+
+        .tab-panel-header {
+            background: linear-gradient(to bottom, #4a90d9, #2060b0);
+            color: white;
+            font-size: 13px; /* Increased */
+            font-weight: bold;
+            padding: 4px 10px;
+        }
+
+        .special-offers-content {
+            padding: 10px 20px;
+        }
+
+        .offer-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Keep row left-aligned */
+            gap: 12px;
+            padding: 4px 6px; 
+            border-radius: 3px;
+        }
+
+        .offer-row:hover {
+            background-color: #f5f8fc;
+        }
+
+        .offer-label {
+            font-size: 13px;
+            color: #333;
+            text-align: right;
+            min-width: 250px; /* Force label to consistent width to mimic other tabs */
+            display: inline-block; /* Required for text-align to work inside flex children */
+        }
+
+        input[type="checkbox"].offer-checkbox {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: var(--accent-color, #003399); /* Ensure color match */
+        }
+
+        /* Right side buttons */
+        .main-layout {
+            display: flex;
+            gap: 8px;
+        }
+
+        .panel-area {
+            flex: 1;
+        }
+
+        .side-buttons-top {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-top: 4px;
+            align-items: center;
+        }
+
+        .side-nav-btn {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(to bottom, #5cb85c, #449d44); /* slightly sleeker button */
+            border: 1px solid #398439;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 2px;
+            transition: filter 0.2s;
+        }
+
+        .side-nav-btn:hover {
+            filter: brightness(1.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            padding-top: 140px;
+        }
+
+        .action-btn {
+            width: 64px;
+            height: 26px; /* Slightly taller for Material feel */
+            border: none;
+            border-radius: 4px;
+            font-size: 12px; /* Increased */
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            transition: filter 0.2s; /* Replaced box-shadow */
+        }
+
+        .action-btn:hover {
+            filter: brightness(0.9);
+        }
+
+        /* Material Colors */
+        .btn-info { background-color: #1976D2; }
+        .btn-info:hover { background-color: #1565C0; }
+
+        .btn-success { background-color: #388E3C; }
+        .btn-success:hover { background-color: #2E7D32; }
+
+        .btn-warning { background-color: #F57C00; }
+        .btn-warning:hover { background-color: #EF6C00; }
+
+        .btn-danger { background-color: #D32F2F; }
+        .btn-danger:hover { background-color: #C62828; }
+
+        .btn-neutral { background-color: #757575; }
+        .btn-neutral:hover { background-color: #616161; }
+
+        /* Behind the Scene section */
+        .behind-scene {
+            margin-top: 6px;
+            border: 1px solid #aaa;
+        }
+
+        .behind-scene-header {
+            background: linear-gradient(to bottom, #4a90d9, #2060b0);
+            color: white;
+            font-size: 13px; /* Increased */
+            font-weight: bold;
+            padding: 4px 10px;
+        }
+
+        .behind-scene-content {
+            background: white;
+            padding: 6px 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4px 10px;
+        }
+
+        .bts-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 6px; /* Added spacing between behind-the-scene rows vertically */
+        }
+
+        .bts-label {
+            font-size: 12px; /* Increased */
+            color: #003399;
+            font-weight: bold;
+            min-width: 85px; /* Adjust to fit larger font */
+            text-align: right; /* Added requested alignment */
+        }
+
+        .bts-input {
+            border: 1px solid #aaa;
+            background: white;
+            height: 26px; /* Increased height */
+            width: 100%;
+            font-size: 13px;
+            padding: 0 8px;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+        }
